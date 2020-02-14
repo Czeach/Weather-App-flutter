@@ -1,15 +1,62 @@
+import 'dart:convert';
+import 'weatherModel.dart';
 import 'package:flutter/material.dart';
+import 'Scroll.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+
+}
+
+class _MyAppState extends State<MyApp> {
+
+  bool isLoading = false;
+  WeatherModel weatherData;
+
+
+  @override
+  void initState() {
+    loadWeather();
+    super.initState();
+  }
+
+  var currentIndex = 0;
+
+  loadWeather() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try{
+      final weatherResponse = await http.get(
+          'https://api.openweathermap.org/data/2.5/forecast/daily?q=Nsukka&appid=a18494d4eee39d449c841066b7e55685&cnt=5&units=metric');
+
+      if (weatherResponse.statusCode == 200) {
+        setState(() {
+          weatherData = WeatherModel.fromJson(json.decode(weatherResponse.body));
+          isLoading = false;
+        });
+      }
+
+    } catch (e){
+      print(e.toString());
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       home: Scaffold(
-//        backgroundColor: Colors.black,
         body: Container(
           color: Colors.black87,
           child: Column(
@@ -44,85 +91,30 @@ class MyApp extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 35),
                 child: Text(
-                  'Location',
+                  '${weatherData?.city?.name ?? ''}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
-                    fontFamily: 'PassionOne'
                   ),
                 ),
               ),
-              SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: Container(
-                  height: 480,
-                  width: 350,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(22)
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24, top: 16),
-                        child: Text(
-                          '35',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 144,
-                            fontWeight: FontWeight.w700
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24),
-                        child: Text(
-                          'Rain',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 34,
-                              fontWeight: FontWeight.w400
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24, top: 48),
-                        child: Text(
-                          'Light rain stopping in 13 min., \nstarting again 30 min later. ',
-                          style: TextStyle(
-                              color: Colors.grey[300],
-                              fontSize: 16,
-                              fontWeight: FontWeight.w200
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 80,
-                      ),
-                      Divider(
-                        height: 2,
-                        color: Colors.grey[900],
-                        thickness: 2,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 270,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 45),
-                            child: Icon(
-                              Icons.cloud_queue,
-                              color: Colors.red,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+//              SizedBox(
+//                height: 30,
+//              ),
+              SafeArea(
+                child: Center(
+                  child: Container(
+                    height: 480,
+                    child: ListView.builder(
+                        itemCount: weatherData?.vlist?.length ?? 0,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, i) => Padding(
+                            padding:
+                            const EdgeInsets.only(left: 35, right: 20),
+                            child: Scroll(weather: weatherData?.vlist[i],)
+                        )
+                    ),
                   ),
                 ),
               )
@@ -130,7 +122,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      );
-
+    );
   }
+
 }
