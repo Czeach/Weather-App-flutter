@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
               SafeArea(
                 child: Center(
                   child: Container(
-                    height: 480,
+                    height: 520,
                     child: ListView.builder(
                         itemCount: weatherData?.vlist?.length ?? 0,
                         scrollDirection: Axis.horizontal,

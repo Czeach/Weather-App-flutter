@@ -25,36 +25,36 @@ class Scroll extends StatelessWidget {
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 100,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w800),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 24),
+            padding: const EdgeInsets.only(left: 24, top: 10),
             child: Text(
               "${weather?.weather[0]?.main ?? ''}",
               style: TextStyle(
-                  color: Colors.grey[400],
+                  color: Colors.grey[300],
                   fontSize: 30,
                   fontWeight: FontWeight.w400),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 24, top: 32),
+                left: 24, top: 40, bottom: 25),
             child: Text(
               "${weather?.weather[0]?.description ?? ''}",
               style: TextStyle(
-                  color: Colors.grey[300],
+                  color: Colors.grey[400],
                   fontSize: 18,
                   fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w200),
+                  fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
             height: 60,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 24, bottom: 30),
+            padding: const EdgeInsets.only(left: 24, bottom: 25),
             child: Text(
               'Date: ${weather?.dt ?? ''}',
               style: TextStyle(
@@ -74,7 +74,7 @@ class Scroll extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 55),
             child: Row(
               children: <Widget>[
                 SizedBox(
@@ -85,7 +85,7 @@ class Scroll extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 14,
-                      fontWeight: FontWeight.w200
+                      fontWeight: FontWeight.w400
                   ),
                 ),
                 SizedBox(
