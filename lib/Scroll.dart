@@ -21,7 +21,7 @@ class Scroll extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 24, top: 16),
             child: Text(
-              "${weather?.temp?.day ?? ''}°C",
+              "${weather?.temp?.day ?? ''}°",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 100,
@@ -81,7 +81,7 @@ class Scroll extends StatelessWidget {
                   width: 30,
                 ),
                 Text(
-                  "${weather?.temp?.min ?? ''}°C - ${weather?.temp?.max ?? ''}°C",
+                  "${weather?.temp?.min ?? ''}° - ${weather?.temp?.max ?? ''}°",
                   style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 14,

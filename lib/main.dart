@@ -3,13 +3,14 @@ import 'weatherModel.dart';
 import 'package:flutter/material.dart';
 import 'Scroll.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:time_formatter/time_formatter.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
-
 }
 
 class _MyAppState extends State<MyApp> {
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                     Padding(
                       padding: const EdgeInsets.only(left: 35),
                       child: Icon(
-                        Icons.filter_list,
+                        Icons.sort,
                         color: Colors.white,
                       ),
                     ),
@@ -99,9 +101,6 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-//              SizedBox(
-//                height: 30,
-//              ),
               SafeArea(
                 child: Center(
                   child: Container(
